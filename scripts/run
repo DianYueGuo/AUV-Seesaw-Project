@@ -1,0 +1,14 @@
+#!/bin/bash
+
+IMAGE_NAME=ros_bridge
+CONTAINER_NAME=ros_bridge
+
+echo RUNNING BRIDGE...
+
+docker run \
+--name $CONTAINER_NAME \
+-it \
+--rm \
+--net=host \
+--pid=host \
+"${IMAGE_NAME}:latest"
