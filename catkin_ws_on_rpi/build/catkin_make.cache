@@ -1,0 +1,2 @@
+controller_pkg
+-DCATKIN_DEVEL_PREFIX=/root/catkin_ws_on_rpi/devel -DCMAKE_INSTALL_PREFIX=/root/catkin_ws_on_rpi/install -G Unix Makefiles

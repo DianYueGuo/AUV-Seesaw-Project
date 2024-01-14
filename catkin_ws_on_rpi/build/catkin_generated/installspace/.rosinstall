@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /root/catkin_ws_on_rpi/install/setup.sh
