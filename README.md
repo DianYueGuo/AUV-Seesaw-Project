@@ -16,7 +16,7 @@ docker exec -it container_on_rpi bash
 sudo apt update
 sudo apt install git
 
-git clone -b wrap-source-code-with-ros-workspace https://github.com/DianYueGuo/AUV-Seesaw-Project.git
+git clone https://github.com/DianYueGuo/AUV-Seesaw-Project.git
 cd /AUV-Seesaw-Project/catkin_ws_on_rpi/
 
 catkin_make
