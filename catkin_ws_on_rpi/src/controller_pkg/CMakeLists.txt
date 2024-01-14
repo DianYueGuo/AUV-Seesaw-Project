@@ -136,6 +136,7 @@ include_directories(
 # add_executable(${PROJECT_NAME}_node src/controller_pkg_node.cpp)
 
 add_executable(controller src/controller.cpp)
+add_executable(controller_tester src/controller_tester.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -153,6 +154,7 @@ add_executable(controller src/controller.cpp)
 # )
 
 target_link_libraries(controller ${catkin_LIBRARIES})
+target_link_libraries(controller_tester ${catkin_LIBRARIES})
 
 #############
 ## Install ##
