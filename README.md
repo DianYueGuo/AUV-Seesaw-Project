@@ -8,7 +8,7 @@ orca_ros_bridge([https://github.com/NCTU-AUV/orca_ros_bridge](https://github.com
 
 ## To Run ROS on RPI (or Test It on Your Computer)
 
-'''bash
+```bash
 docker pull dongdonghsu065/ros_test
 docker run -itd --name container_on_rpi --hostname rpi_host dongdonghsu065/ros_test
 docker exec -it container_on_rpi bash
@@ -22,13 +22,13 @@ cd /AUV-Seesaw-Project/catkin_ws_on_rpi/
 catkin_make
 
 roscore
-'''
+```
 
 To another terminal window:
 
-'''bash
+```bash
 docker exec -it container_on_rpi bash
 cd /AUV-Seesaw-Project/catkin_ws_on_rpi/
 source devel/setup.bash
 rosrun controller_pkg controller
-'''
+```
