@@ -10,7 +10,7 @@ void messageCb(const std_msgs::Int64& msg)
   servo.write(msg.data);
 }
 
-ros::Subscriber<std_msgs::Int64> sub("servo_topic", &messageCb);
+ros::Subscriber<std_msgs::Int64> sub("servo_angle_topic", &messageCb);
 
 void setup()
 {
