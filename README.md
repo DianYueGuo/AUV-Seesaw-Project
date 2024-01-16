@@ -32,3 +32,12 @@ cd /AUV-Seesaw-Project/catkin_ws_on_rpi/
 source devel/setup.bash
 rosrun controller_pkg controller
 ```
+
+To run controller_tester, open another terminal window:
+
+```bash
+docker exec -it container_on_rpi bash
+cd /AUV-Seesaw-Project/catkin_ws_on_rpi/
+source devel/setup.bash
+rosrun controller_pkg controller_tester
+```
