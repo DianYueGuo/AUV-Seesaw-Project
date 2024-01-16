@@ -1,9 +1,13 @@
+#include <cmath>
+
 #include "ros/ros.h"
 #include "std_msgs/Float32.h"
 #include "std_msgs/Int64.h"
 
-void Callback(const std_msgs::Float32::ConstPtr& delta_pos) {
-    
+double delta_angle = 0.0;
+
+void Callback(const std_msgs::Float32::ConstPtr& delta_pos_msg) {
+    delta_angle = atan(delta_pos_msg->data * 0.01);
 }
 
 int main(int argc, char **argv)
@@ -19,7 +23,7 @@ int main(int argc, char **argv)
     while (ros::ok())
     {
         std_msgs::Int64 servo_angle_msg;
-        servo_angle_msg.data = 90;
+        servo_angle_msg.data = (int) (90 + delta_angle / M_PI * 190);
         pub.publish(servo_angle_msg);
 
         ros::spinOnce();
