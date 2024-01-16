@@ -41,3 +41,64 @@ cd /AUV-Seesaw-Project/catkin_ws_on_rpi/
 source devel/setup.bash
 rosrun controller_pkg controller_tester
 ```
+
+## To use ros bridge(暫定)
+
+Usage
+1.build container(沒記錯的話在rpi上不需要這行)
+```bash
+./script/build.sh
+```
+2.execute bridge (ensure ros1 core is running)
+```bash
+./script/run
+```
+
+範例使用 --- 需開四個terminal
+
+terminal 1: 開 ros1 roscore
+1.連到敞篷主機(在rpi上使用這步可略過)
+2.source /opt/ros/noetic/setup.bash
+3.roscore
+```bash
+ssh auv
+source /opt/ros/noetic/setup.bash
+roscore
+```
+
+terminal 2: 開 bridge:
+1.連到敞篷主機
+2.cd workspaces/ros2_ws/src/orca_ros_bridge/
+3./scripts/run
+(會出現running bridge)
+```bash
+ssh auv
+cd workspaces/ros2_ws/src/orca_ros_bridge/
+./scripts/run
+```
+
+terminal 3: run ros2(talker)
+1.連到敞篷主機
+2.docker run -it --rm --net=host --pid=host orca_ros2
+會出現/workspaces/ros2_ws$的指令列
+3.ros2 run program_name talker
+```bash
+ssh auv
+docker run -it --rm --net=host --pid=host orca_ros2
+$ros2 run demo_nodes_cpp(for example) talker
+```
+理論上talker端會一直發送hello world 的訊息
+
+terminal 4: run ros1(listener)
+1.連ssh auv
+2.source /opt/ros/noetic/setup.bash
+3.rosrun program_name listener
+```bash
+ssh auv
+source /opt/ros/noetic/setup.bash
+rosrun rospy_tutorials(for example) listener
+```
+理論上listener端會一直接收來自talker端hello world 的訊息
+
+ps.前兩個terminal 我在rpi試過了 是可行的 後兩個當時rpi上還沒裝ros2我
+不確定能不能跑 但應該可行 可能需要微調
