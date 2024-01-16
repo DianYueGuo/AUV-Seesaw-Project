@@ -23,10 +23,13 @@ void update_physics()
     delta_pos += ball_velocity * time_duration.toSec();
     ball_velocity -= acceleration * time_duration.toSec() * sin(delta_angle);
 
-    if (delta_pos > position_limit)
+    if (delta_pos > position_limit) {
         delta_pos = position_limit;
-    if (delta_pos < -position_limit)
+        ball_velocity = 0.0;
+    } else if (delta_pos < -position_limit) {
         delta_pos = -position_limit;
+        ball_velocity = 0.0;
+    }
 }
 
 void Callback(const std_msgs::Int64::ConstPtr &servo_angle_msg)
