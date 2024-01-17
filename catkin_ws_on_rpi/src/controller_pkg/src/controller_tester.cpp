@@ -4,21 +4,22 @@
 #include "std_msgs/Float32.h"
 #include "std_msgs/Int64.h"
 
+const double topic_publishing_rate = 6.0;
 const double position_limit = 100.0;
+const double acceleration = 9.802 * 3 / 5;
 
-const double acceleration = 5.0;
-
-double delta_pos = 2.0;
-double ball_velocity = 0.1;
+double delta_pos = 50.0;
+double ball_velocity = 5.0;
 double delta_angle = 0.01;
 
-ros::Time previous_time;
+ros::Time time_stamp_for_updating_physics;
+ros::Time time_stamp_for_publishing_topic;
 
 void update_physics()
 {
     ros::Time current_time = ros::Time::now();
-    ros::Duration time_duration = current_time - previous_time;
-    previous_time = current_time;
+    ros::Duration time_duration = current_time - time_stamp_for_updating_physics;
+    time_stamp_for_updating_physics = current_time;
 
     delta_pos += ball_velocity * time_duration.toSec();
     ball_velocity -= acceleration * time_duration.toSec() * sin(delta_angle);
@@ -47,7 +48,8 @@ int main(int argc, char **argv)
 
     ros::Rate rate(60);
 
-    previous_time = ros::Time::now();
+    time_stamp_for_updating_physics = ros::Time::now();
+    time_stamp_for_publishing_topic = ros::Time::now();
 
     while (ros::ok())
     {
@@ -55,9 +57,16 @@ int main(int argc, char **argv)
 
         update_physics();
 
-        std_msgs::Float32 delta_pos_msg;
-        delta_pos_msg.data = delta_pos;
-        pub.publish(delta_pos_msg);
+        ros::Time current_time = ros::Time::now();
+        ros::Duration time_duration = current_time - time_stamp_for_publishing_topic;
+
+        if(time_duration.toSec() >= 1/topic_publishing_rate) {
+            time_stamp_for_publishing_topic = current_time;
+
+            std_msgs::Float32 delta_pos_msg;
+            delta_pos_msg.data = delta_pos;
+            pub.publish(delta_pos_msg);
+        }
 
         ros::spinOnce();
 
